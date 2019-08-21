@@ -54,11 +54,11 @@ public class UserRestService implements UserDetailsService  {
 	private BCryptPasswordEncoder bcryptEncoder;
 
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userRepository.findByUsername(username);
+		User user = userRepository.findByEmail(username);
 		if(user == null){
 			throw new UsernameNotFoundException("Invalid username or password.");
 		}
-		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthority(user));
+		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), getAuthority(user));
 	}
 	
 	//private Set<SimpleGrantedAuthority> getAuthority(User user) {
@@ -80,16 +80,14 @@ public class UserRestService implements UserDetailsService  {
 	    }
 	
 	public User findOne(String username) {
-		return userRepository.findByUsername(username);
+		return userRepository.findByEmail(username);
 	}
 	
 	
     public User save(User user) {
 	    User newUser = new User();
-	    newUser.setUsername(user.getUsername());
+	    newUser.setEmail(user.getEmail());
 	    newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
-		newUser.setAge(user.getAge());
-		newUser.setSalary(user.getSalary());
         return userRepository.save(newUser);
     }
 

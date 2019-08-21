@@ -7,7 +7,7 @@ import dz.rgserver.model.Role;
 public class AuthToken {
 
     private String token; 
-    private String username;
+    private String email;
     private String role; 
     
     
@@ -16,10 +16,10 @@ public class AuthToken {
     
 
 
-	public AuthToken(String token, String username, String role) {
+	public AuthToken(String token, String email, String role) {
 		super();
 		this.token = token;
-		this.username = username;
+		this.email = email;
 		this.role = role;
 	}
 
@@ -27,9 +27,9 @@ public class AuthToken {
         this.token = token;
     }
 
-	public AuthToken(String token, String username) {
+	public AuthToken(String token, String email) {
         this.token = token;
-        this.username = username;
+        this.email = email;
     }
 
     public AuthToken() {
@@ -45,12 +45,12 @@ public class AuthToken {
 
  
 
-	public String getUsername() {
-        return username;
+	public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 	public String getRole() {

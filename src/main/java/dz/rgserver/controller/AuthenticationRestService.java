@@ -41,14 +41,14 @@ public class AuthenticationRestService {
 
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        loginUser.getUsername(),
+                        loginUser.getEmail(),
                         loginUser.getPassword()
                 )
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         final String token = jwtTokenUtil.generateToken(authentication);
-        final User user = userRestService.findOne(loginUser.getUsername());
-        return new AuthToken(token, user.getUsername(), user.getRole().getName());
+        final User user = userRestService.findOne(loginUser.getEmail());
+        return new AuthToken(token, user.getEmail(), user.getRole().getName());
     }
     
  
