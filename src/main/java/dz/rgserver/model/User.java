@@ -61,14 +61,137 @@ public class User {
 		this.role = role;
 	}
 
-
-
-
-
-
-
-
-
-
-
 }
+
+/*import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity
+@Table(name = "utilisateur")
+
+public class User {
+
+@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Column(name="user_id")
+private int id; 
+@Column
+private String firstName; 
+@Column
+private String lastName; 
+@Column
+@JsonIgnore
+private String password;
+@Column
+private String username;
+
+//Gestion des relations 
+
+//relation user-activite
+@ManyToOne
+@JoinColumn(name="id_activite")
+private Activite activite;
+//relation user-institution
+@ManyToOne
+@JoinColumn(name="id_institution")
+private Institution institution;
+
+//relation user-loi 
+@ManyToOne
+@JoinColumn(name="id_loi")
+private Loi loi;
+//relation user-demandePermis
+@ManyToOne
+@JoinColumn(name="id_demande")
+private DemandePermis demande;
+
+//relation user-ressource
+@ManyToOne
+@JoinColumn(name="id_ressource")
+private RessourceGenetique ressource;
+
+//relation User_Role
+@ManyToOne
+@JoinColumn(name="role_id")
+private Role role;
+
+public Institution getInstitution() {
+return institution;
+}
+
+public void setInstitution(Institution institution) {
+this.institution = institution;
+}
+
+public Loi getLoi() {
+return loi;
+}
+
+public void setLoi(Loi loi) {
+this.loi = loi;
+}
+
+public DemandePermis getDemande() {
+return demande;
+}
+
+public void setDemande(DemandePermis demande) {
+this.demande = demande;
+}
+
+public RessourceGenetique getRessource() {
+return ressource;
+}
+
+public void setRessource(RessourceGenetique ressource) {
+this.ressource = ressource;
+}
+
+public int getId() {
+return id;
+}
+
+public void setId(int id) {
+this.id = id;
+}
+
+public String getFirstName() {
+return firstName;
+}
+
+public void setFirstName(String firstName) {
+this.firstName = firstName;
+}
+
+public String getLastName() {
+return lastName;
+}
+
+public void setLastName(String lastName) {
+this.lastName = lastName;
+}
+
+public String getPassword() {
+return password;
+}
+
+public void setPassword(String password) {
+this.password = password;
+}
+
+public String getUsername() {
+return username;
+}
+
+public void setUsername(String username) {
+this.username = username;
+}
+}*/
