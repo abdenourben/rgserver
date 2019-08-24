@@ -3,6 +3,8 @@ package dz.rgserver.controller;
 import java.util.List;
 import dz.rgserver.dao.ClassificationRepository;
 import dz.rgserver.model.Classification;
+import dz.rgserver.model.RessourceGenetique;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -64,7 +66,7 @@ public class ClassificationRestService {
 	
 	
 
-	
+	//rechercher une classification par designatiion
 	@RequestMapping(value="/chercherClassifications", method = RequestMethod.GET)
 	public Page<Classification> chercherClassifications(
 			@RequestParam(name="mc",defaultValue = "") String mc, 
@@ -74,6 +76,15 @@ public class ClassificationRestService {
 		return classificationRepository.chercherClassifications("%"+mc+"%", new PageRequest(page, size));
 	}
 	
+	//rechercher la liste des RG associés à une classification
+		@RequestMapping(value="/chercherClassification_RG", method = RequestMethod.GET)
+		public Page<RessourceGenetique> chercherClassification_RG(
+				@RequestParam(name="designation_classifiction",defaultValue = "") String designation_classifiction, 
+				@RequestParam(name="page",defaultValue = "0") int page, 
+				@RequestParam(name="size",defaultValue = "5") int size){
+		        
+			return classificationRepository.chercherClassification_RG("%"+designation_classifiction+"%", new PageRequest(page, size));
+		}
 	
 }
 
