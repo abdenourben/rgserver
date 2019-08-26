@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,13 +38,12 @@ public class DemandePermisRestService {
 	}
 	
 	
-
+// sauvegarder une demande de permis envoyé par mail
 	@RequestMapping(value="/demandePermis", method = RequestMethod.POST)
 	public DemandePermis saveDemandePermis(@RequestBody DemandePermis demandePermis ){
-	
+		demandePermis.setEtat("Brouillon");
 		return demandePermisRepository.save(demandePermis);
 	}
-	
 	
 	@RequestMapping(value="/demandePermis/{id}", method = RequestMethod.DELETE)
 	public  boolean deleteDemandePermis(@PathVariable long id ){
@@ -52,15 +52,12 @@ public class DemandePermisRestService {
 		return true;
 	}
 	
-	
-	
 	@RequestMapping(value="/demandePermis/{id}", method = RequestMethod.PUT)
 	public DemandePermis updateDemandePermis(@PathVariable long id ,@RequestBody DemandePermis demandePermis ){
 	
 		demandePermis.setId_demande(id);
 		return demandePermisRepository.save(demandePermis);
 	}
-	
 	
 	@RequestMapping(value="/chercherDemandePermis", method = RequestMethod.GET)
 	public Page<DemandePermis> chercherDemandePermis(
@@ -70,6 +67,35 @@ public class DemandePermisRestService {
 	        
 		return demandePermisRepository.chercherDemandePermis("%"+mc+"%", new PageRequest(page, size));
 	}
+	/****Les trois fonctions du workflow:
+     *autoriserDemandePermis, 
+     *nePasAutoriserDemandePermis,
+     *mettreEnAttenteDemandePermis
+*****/
+@RequestMapping(value="/autoriserDemandePermis/{id}", method = RequestMethod.POST)
+public DemandePermis autoriserDemandePermis(@PathVariable("id") long id ){
+ DemandePermis demandePermis= demandePermisRepository.findById(id).get();
+ demandePermis.setEtat("autorisé");
+ return demandePermisRepository.save(demandePermis);
+}
+	
+	@RequestMapping(value="/nePasAutoriserDemandePermis/{id}", method = RequestMethod.POST)
+	public DemandePermis nePasAutoriserDemandePermis(@PathVariable long id ){
+		DemandePermis demandePermis= demandePermisRepository.findById(id).get();
+		 demandePermis.setEtat("non autorisé");
+		 return demandePermisRepository.save(demandePermis);
+	}
+	
+
+	
+	@RequestMapping(value="/mettreEnAttenteDemandePermis/{id}", method = RequestMethod.POST)
+	public void mettreEnAttenteDemandePermis(@PathVariable long id ) {
+		DemandePermis demandePermis= demandePermisRepository.findById(id).get();
+		 demandePermis.setEtat("en attente");
+	     demandePermisRepository.save(demandePermis);
+	}
 	
 	
+	//la fonction d'envoie par mail
+
 }
