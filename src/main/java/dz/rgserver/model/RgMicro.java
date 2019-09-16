@@ -11,6 +11,8 @@ public class RgMicro extends Rg {
 	
 	private String micro;
 	
+	//ADD ATTRIBUTS
+	
 	//GETTERS AND SETTERS
 
 	public String getMicro() {
