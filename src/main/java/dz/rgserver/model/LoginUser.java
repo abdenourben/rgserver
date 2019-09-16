@@ -4,6 +4,8 @@ public class LoginUser {
 
     private String email; 
     private String password;
+    
+    //GETTERS AND SETTERS
 
     public String getEmail() {
         return email;

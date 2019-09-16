@@ -5,14 +5,9 @@ public class ApiResponse<T> {
 	private int status; 
 	private String message; 
 	private Object result; 
-	
-	public ApiResponse(int status, String message, Object result) {
-		super();
-		this.status = status;
-		this.message = message;
-		this.result = result;
-	}
 
+	//GETTERS AND SETTERS
+	
 	public int getStatus() {
 		return status;
 	}
@@ -34,6 +29,16 @@ public class ApiResponse<T> {
 	}
 
 	public void setResult(Object result) {
+		this.result = result;
+	}
+	
+	
+	//CONSTRUCTERS
+	
+	public ApiResponse(int status, String message, Object result) {
+		super();
+		this.status = status;
+		this.message = message;
 		this.result = result;
 	}
 
