@@ -15,13 +15,14 @@ public class Role {
 	
 	 	@Id
 	    private String name;
-
 	    @Column
 	    private String description;
 	    
 	    @OneToMany(mappedBy = "role")
 		@JsonIgnore
 	    private Collection<User> user; 
+	    
+	    //GETTERS AND SETTERS
 
 		public String getName() {
 			return name;

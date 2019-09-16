@@ -26,7 +26,25 @@ public class User {
             //@JoinColumn(name = "ROLE_ID") })
     //private Set<Role> roles;
     
-  
+    @ManyToOne
+    @JsonIgnore
+    private Loi loi;
+    
+    //relation user-rg
+    @ManyToOne
+    @JsonIgnore
+    private Rg rg;
+    
+    @ManyToOne
+    @JsonIgnore
+    private Institution institution;
+    
+  //relation user-activite
+    @ManyToOne
+    @JsonIgnore
+    private Activite activite;
+    
+    //GETTERS AND SETTERS
 
     public long getId() {
         return id;
@@ -113,10 +131,10 @@ private Loi loi;
 @JoinColumn(name="id_demande")
 private DemandePermis demande;
 
-//relation user-ressource
+//relation user-rg
 @ManyToOne
 @JoinColumn(name="id_ressource")
-private RessourceGenetique ressource;
+private Rg rg;
 
 //relation User_Role
 @ManyToOne
@@ -147,12 +165,12 @@ public void setDemande(DemandePermis demande) {
 this.demande = demande;
 }
 
-public RessourceGenetique getRessource() {
-return ressource;
+public Rg getRessource() {
+return rg;
 }
 
-public void setRessource(RessourceGenetique ressource) {
-this.ressource = ressource;
+public void setRessource(Rg rg) {
+this.ressource = rg;
 }
 
 public int getId() {
