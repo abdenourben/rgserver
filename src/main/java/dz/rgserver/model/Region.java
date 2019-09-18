@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="region")
 public class Region implements Serializable {
@@ -23,6 +25,7 @@ public class Region implements Serializable {
  
 	//relation region-RG
 	@ManyToOne
+	@JsonIgnore
 	private Rg rg;
 	
 	//GETTERS AND SETTERS

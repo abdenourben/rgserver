@@ -10,6 +10,7 @@ import dz.rgserver.dao.RgMarineRepository;
 import dz.rgserver.dao.RgMicroRepository;
 import dz.rgserver.dao.RgRepository;
 import dz.rgserver.model.Activite;
+import dz.rgserver.model.Institution;
 import dz.rgserver.model.Region;
 import dz.rgserver.model.Rg;
 import dz.rgserver.model.RgAlimentaire;
@@ -88,6 +89,16 @@ public class RgRestService {
    	public List<RgForet> listRgForet(){
    		return rgForetRepository.findAll(); 
     }
+        
     
+    @RequestMapping(value = "/rg", method = RequestMethod.POST)
+    public Rg saveRg(@RequestBody Rg rg) {
+    	return rgRepository.save(rg);  
+    }
+    
+    @RequestMapping(value = "/rg/find/{id}", method = RequestMethod.GET)
+	public List<Rg> find(@PathVariable long id) {
+		return rgRepository.findByInstitutionId(id);  
+	}
     
 }

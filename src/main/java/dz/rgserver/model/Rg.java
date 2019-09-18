@@ -1,6 +1,7 @@
 package dz.rgserver.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -49,29 +50,29 @@ public abstract class Rg implements Serializable {
 	//on to many
 	
 	//relation entre RG-user
-	@OneToMany(mappedBy="rg",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "rg", orphanRemoval=true)
 	@JsonIgnore
-	private List<User> users;
+	private Collection<User> users;
 	
 	//relation RG-image
-	@OneToMany(mappedBy="rg",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "rg", orphanRemoval=true)
 	@JsonIgnore
-	private List<Image> images;
+	private Collection<Image> images;
 	
-	//relation RG-region 
-	@OneToMany(mappedBy="rg",cascade=CascadeType.ALL)
+	//relation RG-region ManyToMany
+	@OneToMany(mappedBy = "rg", orphanRemoval=true)
 	@JsonIgnore
-	private List<Region> regions;
+	private Collection<Region> regions;
 	
 	//relation RG_usageCommercial
-	@OneToMany(mappedBy="rg",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "rg", orphanRemoval=true)
 	@JsonIgnore
-	private List<UsageCom> usageCom;
+	private Collection<UsageCom> usageCom;
 	
 	//relation RG_usageTraditionnel
-	@OneToMany(mappedBy="rg",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "rg", orphanRemoval=true)
 	@JsonIgnore
-	private List<UsageTrad> usageTrad;
+	private Collection<UsageTrad> usageTrad;
 	
 	
 	//GETTERS AND SETTERS
@@ -165,43 +166,43 @@ public abstract class Rg implements Serializable {
 		this.taxonomie = taxonomie;
 	}
 
-	public List<User> getUsers() {
+	public Collection<User> getUsers() {
 		return users;
 	}
 
-	public void setUsers(List<User> users) {
+	public void setUsers(Collection<User> users) {
 		this.users = users;
 	}
 
-	public List<Image> getImages() {
+	public Collection<Image> getImages() {
 		return images;
 	}
 
-	public void setImages(List<Image> images) {
+	public void setImages(Collection<Image> images) {
 		this.images = images;
 	}
 
-	public List<Region> getRegions() {
+	public Collection<Region> getRegions() {
 		return regions;
 	}
 
-	public void setRegions(List<Region> regions) {
+	public void setRegions(Collection<Region> regions) {
 		this.regions = regions;
 	}
 
-	public List<UsageCom> getUsageCom() {
+	public Collection<UsageCom> getUsageCom() {
 		return usageCom;
 	}
 
-	public void setUsageCom(List<UsageCom> usageCom) {
+	public void setUsageCom(Collection<UsageCom> usageCom) {
 		this.usageCom = usageCom;
 	}
 
-	public List<UsageTrad> getUsageTrad() {
+	public Collection<UsageTrad> getUsageTrad() {
 		return usageTrad;
 	}
 
-	public void setUsageTrad(List<UsageTrad> usageTrad) {
+	public void setUsageTrad(Collection<UsageTrad> usageTrad) {
 		this.usageTrad = usageTrad;
 	}
 	
@@ -229,6 +230,13 @@ public abstract class Rg implements Serializable {
 		this.regions = regions;
 		this.usageCom = usageCom;
 		this.usageTrad = usageTrad;
+	}
+	
+	public Rg(long id) {
+		super();
+		this.id = id;
+
+	
 	}
 
 	public Rg() {
