@@ -12,6 +12,7 @@ import dz.rgserver.model.UsageTrad;
 @Repository
 public interface RgRepository extends JpaRepository<Rg, Long> {
 	public List<Rg> findByInstitutionId(long id); 
+	public List<Rg> findByTaxonomieId(long id); 
 
 
 

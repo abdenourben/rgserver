@@ -1,6 +1,7 @@
 package dz.rgserver.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -29,9 +30,9 @@ public class Taxonomie implements Serializable {
 	private String classe;
 	
 	//relation Taxonomie-RG
-	@OneToMany(mappedBy="taxonomie",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "taxonomie", orphanRemoval=true)
 	@JsonIgnore
-	private List<Rg> rg;
+	private Collection<Rg> rg;
 	
 	//GETTERS AND SETTERS
 
@@ -83,12 +84,35 @@ public class Taxonomie implements Serializable {
 		this.classe = classe;
 	}
 
-	public List<Rg> getRessource() {
+	public Collection<Rg> getRessource() {
 		return rg;
 	}
 
-	public void setRessource(List<Rg> rg) {
+	public void setRessource(Collection<Rg> rg) {
 		this.rg = rg;
 	}
+	
+	//CONSTRUCTORS
+
+	public Taxonomie(long id, String espece, String genre, String famille, String ordre, String classe,
+			Collection<Rg> rg) {
+		super();
+		this.id = id;
+		this.espece = espece;
+		this.genre = genre;
+		this.famille = famille;
+		this.ordre = ordre;
+		this.classe = classe;
+		this.rg = rg;
+	}
+
+	public Taxonomie() {
+		super();
+	}
+	
+	
+	
+	
+	
 
 }

@@ -181,6 +181,12 @@ public class Institution implements Serializable  {
 	}
 	
 	//CONSTRUCTORS
+	
+	public Institution(String nom) {
+		
+		this.nom = nom;
+		
+	}
 
 	public Institution(long id, String nom, String raisonSociale, String statutJuridique, String natureEtabelissement,
 			String logoChemin, Date dateCreation, String categorie, String type, String secteurActivite, String siteWeb,
@@ -209,6 +215,34 @@ public class Institution implements Serializable  {
 		this.users = users;
 		this.rg = rg;
 	}
+	
+	public Institution(long id, String nom, String raisonSociale, String statutJuridique, String natureEtabelissement,
+			String logoChemin, Date dateCreation, String categorie, String type, String secteurActivite, String siteWeb,
+			String email, String telFixe, String telPortable, String fax, String typeImplicationApa,
+			String anneeImplicationApa, String infoAdditionnelles,
+			Collection<Rg> rg) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.raisonSociale = raisonSociale;
+		this.statutJuridique = statutJuridique;
+		this.natureEtabelissement = natureEtabelissement;
+		this.logoChemin = logoChemin;
+		this.dateCreation = dateCreation;
+		this.categorie = categorie;
+		this.type = type;
+		this.secteurActivite = secteurActivite;
+		this.siteWeb = siteWeb;
+		this.email = email;
+		this.telFixe = telFixe;
+		this.telPortable = telPortable;
+		this.fax = fax;
+		this.typeImplicationApa = typeImplicationApa;
+		this.anneeImplicationApa = anneeImplicationApa;
+		this.infoAdditionnelles = infoAdditionnelles;
+		this.rg = rg;
+	}
+	
 	public Institution() {
 		super();
 	}
