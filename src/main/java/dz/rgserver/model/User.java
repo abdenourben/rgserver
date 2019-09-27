@@ -1,9 +1,7 @@
 package dz.rgserver.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "utilisateur")
@@ -12,13 +10,9 @@ public class User {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
-    @Column
     private String email;
-    @Column
     private String password;
-    
-    @ManyToOne
-    private Role role; 
+       
 
     //@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     //@JoinTable(name = "UTILISATEUR_ROLES", joinColumns = {
@@ -26,6 +20,12 @@ public class User {
             //@JoinColumn(name = "ROLE_ID") })
     //private Set<Role> roles;
     
+
+    @ManyToOne
+    @JsonIgnore
+    private Role role; 
+    
+    //relation user loi
     @ManyToOne
     @JsonIgnore
     private Loi loi;
@@ -35,6 +35,7 @@ public class User {
     @JsonIgnore
     private Rg rg;
     
+    //relation User institution
     @ManyToOne
     @JsonIgnore
     private Institution institution;

@@ -1,22 +1,19 @@
 package dz.rgserver.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -25,40 +22,49 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name="institution")
 public class Institution implements Serializable  {	
 
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	private static final long serialVersionUID = 1L;
+	@Id 
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long   id;
 	private String nom;
-	private String raisonSociale;
-	private String statutJuridique;
-	private String natureEtabelissement;
-	private String logoChemin;
+	private String raison;
+	private String statut;
+	private String logo;
 	@Temporal (TemporalType.DATE)
-	private Date dateCreation;
+	private @DateTimeFormat(pattern = "yyyy-mm-dd") Date   Creation;
 	private String categorie;
 	private String type;
-	private String secteurActivite;
-	private String siteWeb;
+	private String secteur;
+	private String site;
 	private String email;
-	private String telFixe;
-	private String telPortable;
+	private String telephone;
 	private String fax;
-	private String typeImplicationApa;
-	private String anneeImplicationApa;
-	//private String butAcceeRG;
-	private String infoAdditionnelles;
+	private String adresse;
+	private String typeApa;
+	@Temporal (TemporalType.DATE)
+	private @DateTimeFormat(pattern = "yyyy-mm-dd")Date anneeApa;
+	private String infoAdd;
+	
+	//relation institution-file 
+	@OneToMany
+	@JsonIgnore
+	private List<DBFile> files;
+	
 	
 	//la relation entre intitution et user. 
-	@OneToMany(mappedBy = "institution", orphanRemoval=true)
+	@OneToMany
 	@JsonIgnore
-	private Collection<User> users;
+	private List<User> users;
+	//Relation image institution	
+	@OneToOne
+	@JsonIgnore
+    private Image image;
 	
 	//relation entre instituion et RG.
-	@OneToMany(mappedBy = "institution", orphanRemoval=true)
+	@OneToMany
 	@JsonIgnore
-	private Collection<Rg> rg ;
-
-	//GETTERS AND SETTERS
-
+	private List<Rg> rg ;
+	
 	public long getId() {
 		return id;
 	}
@@ -71,35 +77,29 @@ public class Institution implements Serializable  {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	public String getRaisonSociale() {
-		return raisonSociale;
+	public String getRaison() {
+		return raison;
 	}
-	public void setRaisonSociale(String raisonSociale) {
-		this.raisonSociale = raisonSociale;
+	public void setRaison(String raison) {
+		this.raison = raison;
 	}
-	public String getStatutJuridique() {
-		return statutJuridique;
+	public String getStatut() {
+		return statut;
 	}
-	public void setStatutJuridique(String statutJuridique) {
-		this.statutJuridique = statutJuridique;
+	public void setStatut(String statut) {
+		this.statut = statut;
 	}
-	public String getNatureEtabelissement() {
-		return natureEtabelissement;
+	public String getLogo() {
+		return logo;
 	}
-	public void setNatureEtabelissement(String natureEtabelissement) {
-		this.natureEtabelissement = natureEtabelissement;
+	public void setLogo(String logo) {
+		this.logo = logo;
 	}
-	public String getLogoChemin() {
-		return logoChemin;
+	public Date getCreation() {
+		return Creation;
 	}
-	public void setLogoChemin(String logoChemin) {
-		this.logoChemin = logoChemin;
-	}
-	public Date getDateCreation() {
-		return dateCreation;
-	}
-	public void setDateCreation(Date dateCreation) {
-		this.dateCreation = dateCreation;
+	public void setCreation(Date creation) {
+		Creation = creation;
 	}
 	public String getCategorie() {
 		return categorie;
@@ -113,17 +113,17 @@ public class Institution implements Serializable  {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public String getSecteurActivite() {
-		return secteurActivite;
+	public String getSecteur() {
+		return secteur;
 	}
-	public void setSecteurActivite(String secteurActivite) {
-		this.secteurActivite = secteurActivite;
+	public void setSecteur(String secteur) {
+		this.secteur = secteur;
 	}
-	public String getSiteWeb() {
-		return siteWeb;
+	public String getSite() {
+		return site;
 	}
-	public void setSiteWeb(String siteWeb) {
-		this.siteWeb = siteWeb;
+	public void setSite(String site) {
+		this.site = site;
 	}
 	public String getEmail() {
 		return email;
@@ -131,17 +131,11 @@ public class Institution implements Serializable  {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getTelFixe() {
-		return telFixe;
+	public String getTelephone() {
+		return telephone;
 	}
-	public void setTelFixe(String telFixe) {
-		this.telFixe = telFixe;
-	}
-	public String getTelPortable() {
-		return telPortable;
-	}
-	public void setTelPortable(String telPortable) {
-		this.telPortable = telPortable;
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
 	}
 	public String getFax() {
 		return fax;
@@ -149,103 +143,73 @@ public class Institution implements Serializable  {
 	public void setFax(String fax) {
 		this.fax = fax;
 	}
-	public String getInfoAdditionnelles() {
-		return infoAdditionnelles;
+	public String getAdresse() {
+		return adresse;
 	}
-	public void setInfoAdditionnelles(String infoAdditionnelles) {
-		this.infoAdditionnelles = infoAdditionnelles;
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
 	}
-	public Collection<User> getUsers() {
+	public String getTypeApa() {
+		return typeApa;
+	}
+	public void setTypeApa(String typeApa) {
+		this.typeApa = typeApa;
+	}
+	public Date getAnneeApa() {
+		return anneeApa;
+	}
+	public void setAnneeApa(Date anneeApa) {
+		this.anneeApa = anneeApa;
+	}
+	public String getInfoAdd() {
+		return infoAdd;
+	}
+	public void setInfoAdd(String infoAdd) {
+		this.infoAdd = infoAdd;
+	}
+	public List<User> getUsers() {
 		return users;
 	}
-	public void setUsers(Collection<User> users) {
+	public void setUsers(List<User> users) {
 		this.users = users;
 	}
-	public Collection<Rg> getRessource() {
+	public Image getImage() {
+		return image;
+	}
+	public void setImage(Image image) {
+		this.image = image;
+	}
+	public List<Rg> getRg() {
 		return rg;
 	}
-	public void setRessource(Collection<Rg> rg) {
+	public void setRg(List<Rg> rg) {
 		this.rg = rg;
 	}
-	public String getTypeImplicationApa() {
-		return typeImplicationApa;
-	}
-	public void setTypeImplicationApa(String typeImplicationApa) {
-		this.typeImplicationApa = typeImplicationApa;
-	}
-	public String getAnneeImplicationApa() {
-		return anneeImplicationApa;
-	}
-	public void setAnneeImplicationApa(String anneeImplicationApa) {
-		this.anneeImplicationApa = anneeImplicationApa;
-	}
-	
-	//CONSTRUCTORS
-	
-	public Institution(String nom) {
-		
-		this.nom = nom;
-		
-	}
-
-	public Institution(long id, String nom, String raisonSociale, String statutJuridique, String natureEtabelissement,
-			String logoChemin, Date dateCreation, String categorie, String type, String secteurActivite, String siteWeb,
-			String email, String telFixe, String telPortable, String fax, String typeImplicationApa,
-			String anneeImplicationApa, String infoAdditionnelles, List<User> users,
-			Collection<Rg> rg) {
-		super();
-		this.id = id;
-		this.nom = nom;
-		this.raisonSociale = raisonSociale;
-		this.statutJuridique = statutJuridique;
-		this.natureEtabelissement = natureEtabelissement;
-		this.logoChemin = logoChemin;
-		this.dateCreation = dateCreation;
-		this.categorie = categorie;
-		this.type = type;
-		this.secteurActivite = secteurActivite;
-		this.siteWeb = siteWeb;
-		this.email = email;
-		this.telFixe = telFixe;
-		this.telPortable = telPortable;
-		this.fax = fax;
-		this.typeImplicationApa = typeImplicationApa;
-		this.anneeImplicationApa = anneeImplicationApa;
-		this.infoAdditionnelles = infoAdditionnelles;
-		this.users = users;
-		this.rg = rg;
-	}
-	
-	public Institution(long id, String nom, String raisonSociale, String statutJuridique, String natureEtabelissement,
-			String logoChemin, Date dateCreation, String categorie, String type, String secteurActivite, String siteWeb,
-			String email, String telFixe, String telPortable, String fax, String typeImplicationApa,
-			String anneeImplicationApa, String infoAdditionnelles,
-			Collection<Rg> rg) {
-		super();
-		this.id = id;
-		this.nom = nom;
-		this.raisonSociale = raisonSociale;
-		this.statutJuridique = statutJuridique;
-		this.natureEtabelissement = natureEtabelissement;
-		this.logoChemin = logoChemin;
-		this.dateCreation = dateCreation;
-		this.categorie = categorie;
-		this.type = type;
-		this.secteurActivite = secteurActivite;
-		this.siteWeb = siteWeb;
-		this.email = email;
-		this.telFixe = telFixe;
-		this.telPortable = telPortable;
-		this.fax = fax;
-		this.typeImplicationApa = typeImplicationApa;
-		this.anneeImplicationApa = anneeImplicationApa;
-		this.infoAdditionnelles = infoAdditionnelles;
-		this.rg = rg;
-	}
-	
 	public Institution() {
 		super();
 	}
-
-
+	public Institution(String nom, String raison, String statut, String logo, Date creation, String categorie,
+			String type, String secteur, String site, String email, String telephone, String fax, String adresse,
+			String typeApa, Date anneeApa, String infoAdd) {
+		super();
+		this.nom = nom;
+		this.raison = raison;
+		this.statut = statut;
+		this.logo = logo;
+		Creation = creation;
+		this.categorie = categorie;
+		this.type = type;
+		this.secteur = secteur;
+		this.site = site;
+		this.email = email;
+		this.telephone = telephone;
+		this.fax = fax;
+		this.adresse = adresse;
+		this.typeApa = typeApa;
+		this.anneeApa = anneeApa;
+		this.infoAdd = infoAdd;
+	}
+	
+	
+	
 }

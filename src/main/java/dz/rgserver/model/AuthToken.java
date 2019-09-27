@@ -1,9 +1,5 @@
 package dz.rgserver.model;
 
-import java.util.Set;
-
-import dz.rgserver.model.Role;
-
 public class AuthToken {
 
     private String token; 

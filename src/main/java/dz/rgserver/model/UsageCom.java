@@ -1,12 +1,9 @@
 package dz.rgserver.model;
 import java.io.Serializable;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -16,7 +13,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name="usage_com")
 public class UsageCom implements Serializable {
 
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
+	
+	private static final long serialVersionUID = 1L;
+	@Id 
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private String description; 
 	private String secteur;
@@ -26,9 +26,7 @@ public class UsageCom implements Serializable {
 	@JsonIgnore
 	private Rg rg;
 
-	
 	//GETTERS AND SETTERS
-	
 	public long getId() {
 		return id;
 	}
@@ -53,12 +51,25 @@ public class UsageCom implements Serializable {
 		this.secteur = secteur;
 	}
 
-	public Rg getRessource() {
-		return rg;
-	}
-
-	public void setRessource(Rg rg) {
+	
+	public void setRg(Rg rg) {
 		this.rg = rg;
 	}
+
+	public UsageCom() {
+		super();
+	}
+
+
+	
+
+	public UsageCom(String description, String secteur) {
+		super();
+		this.description = description;
+		this.secteur = secteur;
+	}
+
+	
+
 	
 }
