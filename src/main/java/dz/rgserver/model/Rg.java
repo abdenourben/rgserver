@@ -31,9 +31,44 @@ public abstract class Rg implements Serializable {
 	protected String description;
 	protected String morphologie;
 	protected String formuleChimique; 
+	protected String structure;
 	protected String environnement; 
-	protected String cycleVie; 
+	protected String transmission; 
+	protected String cycleVie;
+	private   Boolean valide;
+	
+	public String getEtatRisque() {
+		return etatRisque;
+	}
+
+	public void setEtatRisque(String etatRisque) {
+		this.etatRisque = etatRisque;
+	}
+
+	public Boolean getEtatValidation() {
+		return valide;
+	}
+
+	public void setEtatValidation(Boolean etatValidation) {
+		this.valide = etatValidation;
+	}
+
+	public List<DBFile> getFiles() {
+		return files;
+	}
+
+	public void setFiles(List<DBFile> files) {
+		this.files = files;
+	}
+
+	private int numVersion;
 	protected String etatRisque; 
+	
+	
+	//relation RG_file
+	@OneToMany
+	@JsonIgnore
+	private List<DBFile> files;
 	
 	
 	// relation entre RG-institution
@@ -49,27 +84,27 @@ public abstract class Rg implements Serializable {
 	//on to many
 	
 	//relation entre RG-user
-	@OneToMany(mappedBy = "rg", orphanRemoval=true)
+	@OneToMany   
 	@JsonIgnore
 	private Collection<User> users;
 	
 	//relation RG-image
-	@OneToMany(mappedBy = "rg", orphanRemoval=true)
+	@OneToMany   
 	@JsonIgnore
 	private Collection<Image> images;
 	
 	//relation RG-region ManyToMany
-	@OneToMany(mappedBy = "rg", orphanRemoval=true)
+	@OneToMany     
 	@JsonIgnore
 	private Collection<Region> regions;
 	
 	//relation RG_usageCommercial
-	@OneToMany(mappedBy = "rg", orphanRemoval=true)
+	@OneToMany    
 	@JsonIgnore
 	private Collection<UsageCom> usageCom;
 	
 	//relation RG_usageTraditionnel
-	@OneToMany(mappedBy = "rg", orphanRemoval=true)
+	@OneToMany    
 	@JsonIgnore
 	private Collection<UsageTrad> usageTrad;
 	
@@ -117,6 +152,13 @@ public abstract class Rg implements Serializable {
 		this.formuleChimique = formuleChimique;
 	}
 
+	public String getStructure() {
+		return structure;
+	}
+
+	public void setStructure(String structure) {
+		this.structure = structure;
+	}
 
 	public String getEnvironnement() {
 		return environnement;
@@ -126,6 +168,13 @@ public abstract class Rg implements Serializable {
 		this.environnement = environnement;
 	}
 
+	public String getTransmission() {
+		return transmission;
+	}
+
+	public void setTransmission(String transmission) {
+		this.transmission = transmission;
+	}
 
 	public String getCycleVie() {
 		return cycleVie;
@@ -133,6 +182,26 @@ public abstract class Rg implements Serializable {
 
 	public void setCycleVie(String cycleVie) {
 		this.cycleVie = cycleVie;
+	}
+	
+
+
+	
+
+	public String getNomCommunFr() {
+		return nomCommunFr;
+	}
+
+	public void setNomCommunFr(String nomCommunFr) {
+		this.nomCommunFr = nomCommunFr;
+	}
+
+	public String getNomCommunAr() {
+		return nomCommunAr;
+	}
+
+	public void setNomCommunAr(String nomCommunAr) {
+		this.nomCommunAr = nomCommunAr;
 	}
 
 	public Institution getInstitution() {
@@ -191,80 +260,18 @@ public abstract class Rg implements Serializable {
 		this.usageTrad = usageTrad;
 	}
 	
-	public String getNomCommunFr() {
-		return nomCommunFr;
-	}
-
-	public void setNomCommunFr(String nomCommunFr) {
-		this.nomCommunFr = nomCommunFr;
-	}
-
-	public String getNomCommunAr() {
-		return nomCommunAr;
-	}
-
-	public void setNomCommunAr(String nomCommunAr) {
-		this.nomCommunAr = nomCommunAr;
-	}
 	
-	public String getEtatRisque() {
-		return etatRisque;
+	
+
+	public int getNumVersion() {
+		return numVersion;
 	}
 
-	public void setEtatRisque(String etatRisque) {
-		this.etatRisque = etatRisque;
+	public void setNumVersion(int numVersion) {
+		this.numVersion = numVersion;
 	}
-	
 	//CONSTRUCTORS
-	
 
-	public Rg(String nomCommunFr, String nomCommunAr, String nomScientifique) {
-		this.nomCommunAr = nomCommunAr; 
-		this.nomCommunFr = nomCommunFr; 
-		this.nomScientifique = nomScientifique;
-	}
-
-	public Rg(long id, String designationFr, String designationAr, String nomCommun,
-			String nomScientifique, String description, String propriete, String morphologie, String formuleChimique,
-			String structure, String environnement, String transmission, String cycleVie, String etatRisque, Institution institution,
-			Taxonomie taxonomie, List<User> users, List<Image> images, List<Region> regions, List<UsageCom> usageCom,
-			List<UsageTrad> usageTrad) {
-		super();
-		this.id = id;
-		this.nomScientifique = nomScientifique;
-		this.description = description;
-		this.morphologie = morphologie;
-		this.formuleChimique = formuleChimique;
-		this.environnement = environnement;
-		this.cycleVie = cycleVie;
-		this.etatRisque = etatRisque; 
-		this.institution = institution;
-		this.taxonomie = taxonomie;
-		this.users = users;
-		this.images = images;
-		this.regions = regions;
-		this.usageCom = usageCom;
-		this.usageTrad = usageTrad;
-	}
-	
-	public Rg(long id, String designationFr, String designationAr, String nomCommun,
-			String nomScientifique, String description, String propriete, String morphologie, String formuleChimique,
-			String structure, String environnement, String transmission, String cycleVie, Institution institution, Taxonomie taxonomie
-			) {
-		super();
-		this.id = id;
-		this.nomScientifique = nomScientifique;
-		this.description = description;
-		this.morphologie = morphologie;
-		this.formuleChimique = formuleChimique;
-		this.environnement = environnement;
-		this.cycleVie = cycleVie;
-		this.institution = institution;
-		this.taxonomie = taxonomie; 
-	
-	}
-	
-	
 	public Rg(long id) {
 		super();
 		this.id = id;
@@ -275,8 +282,7 @@ public abstract class Rg implements Serializable {
 	public Rg() {
 		super();
 	}
-
-
+	
 
 	
 }

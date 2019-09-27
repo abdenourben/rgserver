@@ -5,13 +5,11 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -26,13 +24,30 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name="activitie")
 public class Activite implements Serializable {
 	
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
+	private static final long serialVersionUID = 1L;
+	public Activite(String titre, Date date_debut, Date date_fin, String domaine, String description, String contenu,
+			String piecesActivites, String type, String localisation) {
+		super();
+		this.titre = titre;
+		this.date_debut = date_debut;
+		this.date_fin = date_fin;
+		this.domaine = domaine;
+		this.description = description;
+		this.contenu = contenu;
+		this.piecesActivites = piecesActivites;
+		this.type = type;
+		this.localisation = localisation;
+		
+	}
+
+	@Id 
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private String titre;
 	@Temporal (TemporalType.DATE)
-	private @DateTimeFormat(pattern = "dd.MM.yyyy")Date date_debut;
+	private @DateTimeFormat(pattern = "yyyy-mm-dd")Date date_debut;
 	@Temporal (TemporalType.DATE)
-	private @DateTimeFormat(pattern = "dd.MM.yyyy") Date date_fin;
+	private @DateTimeFormat(pattern = "yyyy-mm-dd") Date date_fin;
 	private String domaine;
 	private String description;
 	private String contenu; //resume, text
@@ -40,9 +55,21 @@ public class Activite implements Serializable {
 	private String type; // projet, event
 	private String localisation; //address of event
 
-	@OneToMany(mappedBy="activite",cascade=CascadeType.ALL)
+	//relation with users 
+	@OneToMany
 	@JsonIgnore
 	private List<User> users;
+	
+	//relation with image
+	@OneToMany
+	@JsonIgnore
+	private List<Image> images;
+	
+	//relation with file
+	@OneToMany
+	@JsonIgnore
+	private List<DBFile> files;
+	
 	
 	//GETTERS AND SETTERS
 
@@ -80,6 +107,14 @@ public class Activite implements Serializable {
 
 	public String getDomaine() {
 		return domaine;
+	}
+
+	public List<Image> getImages() {
+		return images;
+	}
+
+	public void setImages(List<Image> images) {
+		this.images = images;
 	}
 
 	public void setDomaine(String domaine) {
@@ -135,22 +170,6 @@ public class Activite implements Serializable {
 	}
 
 	//CONSTRUCTORS
-
-	public Activite(long id, String titre, Date date_debut, Date date_fin, String domaine, String description,
-			String contenu, String piecesActivites, String type, String localisation, List<User> users) {
-		super();
-		this.id = id;
-		this.titre = titre;
-		this.date_debut = date_debut;
-		this.date_fin = date_fin;
-		this.domaine = domaine;
-		this.description = description;
-		this.contenu = contenu;
-		this.piecesActivites = piecesActivites;
-		this.type = type;
-		this.localisation = localisation;
-		this.users = users;
-	}
 
 	public Activite() {
 		super();
