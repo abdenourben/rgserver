@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import dz.rgserver.dao.usageComRepository;
+import dz.rgserver.dao.UsageComRepository;
 import dz.rgserver.model.UsageCom;
 
 @RestController
@@ -20,7 +20,7 @@ import dz.rgserver.model.UsageCom;
 public class UsageComRestService {
 	
 	@Autowired
-	private usageComRepository usageComRepository;
+	private UsageComRepository usageComRepository;
 	
 	@RequestMapping(value = "/usage-com", method = RequestMethod.GET)
 	public List<UsageCom> listUsageCom() {

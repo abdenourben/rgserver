@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: rgServer
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: User
+Built-By: subrms
 Implementation-Vendor-Id: dz.rgserver
-Build-Jdk: 1.8.0_71
+Build-Jdk: 1.8.0_222
 Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
  ot-starter-parent/rgserver
 Created-By: Maven Integration for Eclipse
