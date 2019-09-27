@@ -1,6 +1,7 @@
 package dz.rgserver.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -30,10 +31,9 @@ public abstract class Rg implements Serializable {
 	protected String description;
 	protected String morphologie;
 	protected String formuleChimique; 
-	protected String structure;
 	protected String environnement; 
-	protected String transmission; 
 	protected String cycleVie; 
+	protected String etatRisque; 
 	
 	
 	// relation entre RG-institution
@@ -49,29 +49,29 @@ public abstract class Rg implements Serializable {
 	//on to many
 	
 	//relation entre RG-user
-	@OneToMany(mappedBy="rg",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "rg", orphanRemoval=true)
 	@JsonIgnore
-	private List<User> users;
+	private Collection<User> users;
 	
 	//relation RG-image
-	@OneToMany(mappedBy="rg",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "rg", orphanRemoval=true)
 	@JsonIgnore
-	private List<Image> images;
+	private Collection<Image> images;
 	
-	//relation RG-region 
-	@OneToMany(mappedBy="rg",cascade=CascadeType.ALL)
+	//relation RG-region ManyToMany
+	@OneToMany(mappedBy = "rg", orphanRemoval=true)
 	@JsonIgnore
-	private List<Region> regions;
+	private Collection<Region> regions;
 	
 	//relation RG_usageCommercial
-	@OneToMany(mappedBy="rg",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "rg", orphanRemoval=true)
 	@JsonIgnore
-	private List<UsageCom> usageCom;
+	private Collection<UsageCom> usageCom;
 	
 	//relation RG_usageTraditionnel
-	@OneToMany(mappedBy="rg",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "rg", orphanRemoval=true)
 	@JsonIgnore
-	private List<UsageTrad> usageTrad;
+	private Collection<UsageTrad> usageTrad;
 	
 	
 	//GETTERS AND SETTERS
@@ -117,13 +117,6 @@ public abstract class Rg implements Serializable {
 		this.formuleChimique = formuleChimique;
 	}
 
-	public String getStructure() {
-		return structure;
-	}
-
-	public void setStructure(String structure) {
-		this.structure = structure;
-	}
 
 	public String getEnvironnement() {
 		return environnement;
@@ -133,13 +126,6 @@ public abstract class Rg implements Serializable {
 		this.environnement = environnement;
 	}
 
-	public String getTransmission() {
-		return transmission;
-	}
-
-	public void setTransmission(String transmission) {
-		this.transmission = transmission;
-	}
 
 	public String getCycleVie() {
 		return cycleVie;
@@ -165,51 +151,82 @@ public abstract class Rg implements Serializable {
 		this.taxonomie = taxonomie;
 	}
 
-	public List<User> getUsers() {
+	public Collection<User> getUsers() {
 		return users;
 	}
 
-	public void setUsers(List<User> users) {
+	public void setUsers(Collection<User> users) {
 		this.users = users;
 	}
 
-	public List<Image> getImages() {
+	public Collection<Image> getImages() {
 		return images;
 	}
 
-	public void setImages(List<Image> images) {
+	public void setImages(Collection<Image> images) {
 		this.images = images;
 	}
 
-	public List<Region> getRegions() {
+	public Collection<Region> getRegions() {
 		return regions;
 	}
 
-	public void setRegions(List<Region> regions) {
+	public void setRegions(Collection<Region> regions) {
 		this.regions = regions;
 	}
 
-	public List<UsageCom> getUsageCom() {
+	public Collection<UsageCom> getUsageCom() {
 		return usageCom;
 	}
 
-	public void setUsageCom(List<UsageCom> usageCom) {
+	public void setUsageCom(Collection<UsageCom> usageCom) {
 		this.usageCom = usageCom;
 	}
 
-	public List<UsageTrad> getUsageTrad() {
+	public Collection<UsageTrad> getUsageTrad() {
 		return usageTrad;
 	}
 
-	public void setUsageTrad(List<UsageTrad> usageTrad) {
+	public void setUsageTrad(Collection<UsageTrad> usageTrad) {
 		this.usageTrad = usageTrad;
 	}
 	
+	public String getNomCommunFr() {
+		return nomCommunFr;
+	}
+
+	public void setNomCommunFr(String nomCommunFr) {
+		this.nomCommunFr = nomCommunFr;
+	}
+
+	public String getNomCommunAr() {
+		return nomCommunAr;
+	}
+
+	public void setNomCommunAr(String nomCommunAr) {
+		this.nomCommunAr = nomCommunAr;
+	}
+	
+	public String getEtatRisque() {
+		return etatRisque;
+	}
+
+	public void setEtatRisque(String etatRisque) {
+		this.etatRisque = etatRisque;
+	}
+	
 	//CONSTRUCTORS
+	
+
+	public Rg(String nomCommunFr, String nomCommunAr, String nomScientifique) {
+		this.nomCommunAr = nomCommunAr; 
+		this.nomCommunFr = nomCommunFr; 
+		this.nomScientifique = nomScientifique;
+	}
 
 	public Rg(long id, String designationFr, String designationAr, String nomCommun,
 			String nomScientifique, String description, String propriete, String morphologie, String formuleChimique,
-			String structure, String environnement, String transmission, String cycleVie, Institution institution,
+			String structure, String environnement, String transmission, String cycleVie, String etatRisque, Institution institution,
 			Taxonomie taxonomie, List<User> users, List<Image> images, List<Region> regions, List<UsageCom> usageCom,
 			List<UsageTrad> usageTrad) {
 		super();
@@ -218,10 +235,9 @@ public abstract class Rg implements Serializable {
 		this.description = description;
 		this.morphologie = morphologie;
 		this.formuleChimique = formuleChimique;
-		this.structure = structure;
 		this.environnement = environnement;
-		this.transmission = transmission;
 		this.cycleVie = cycleVie;
+		this.etatRisque = etatRisque; 
 		this.institution = institution;
 		this.taxonomie = taxonomie;
 		this.users = users;
@@ -230,9 +246,37 @@ public abstract class Rg implements Serializable {
 		this.usageCom = usageCom;
 		this.usageTrad = usageTrad;
 	}
+	
+	public Rg(long id, String designationFr, String designationAr, String nomCommun,
+			String nomScientifique, String description, String propriete, String morphologie, String formuleChimique,
+			String structure, String environnement, String transmission, String cycleVie, Institution institution, Taxonomie taxonomie
+			) {
+		super();
+		this.id = id;
+		this.nomScientifique = nomScientifique;
+		this.description = description;
+		this.morphologie = morphologie;
+		this.formuleChimique = formuleChimique;
+		this.environnement = environnement;
+		this.cycleVie = cycleVie;
+		this.institution = institution;
+		this.taxonomie = taxonomie; 
+	
+	}
+	
+	
+	public Rg(long id) {
+		super();
+		this.id = id;
+
+	
+	}
 
 	public Rg() {
 		super();
 	}
+
+
+
 	
 }

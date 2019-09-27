@@ -1,6 +1,7 @@
 package dz.rgserver.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -47,14 +48,14 @@ public class Institution implements Serializable  {
 	private String infoAdditionnelles;
 	
 	//la relation entre intitution et user. 
-	@OneToMany(mappedBy="institution",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "institution", orphanRemoval=true)
 	@JsonIgnore
-	private List<User> users;
+	private Collection<User> users;
 	
 	//relation entre instituion et RG.
-	@OneToMany(mappedBy="institution",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "institution", orphanRemoval=true)
 	@JsonIgnore
-	private List<Rg> rg ;
+	private Collection<Rg> rg ;
 
 	//GETTERS AND SETTERS
 
@@ -154,16 +155,16 @@ public class Institution implements Serializable  {
 	public void setInfoAdditionnelles(String infoAdditionnelles) {
 		this.infoAdditionnelles = infoAdditionnelles;
 	}
-	public List<User> getUsers() {
+	public Collection<User> getUsers() {
 		return users;
 	}
-	public void setUsers(List<User> users) {
+	public void setUsers(Collection<User> users) {
 		this.users = users;
 	}
-	public List<Rg> getRessource() {
+	public Collection<Rg> getRessource() {
 		return rg;
 	}
-	public void setRessource(List<Rg> rg) {
+	public void setRessource(Collection<Rg> rg) {
 		this.rg = rg;
 	}
 	public String getTypeImplicationApa() {
@@ -180,12 +181,18 @@ public class Institution implements Serializable  {
 	}
 	
 	//CONSTRUCTORS
+	
+	public Institution(String nom) {
+		
+		this.nom = nom;
+		
+	}
 
 	public Institution(long id, String nom, String raisonSociale, String statutJuridique, String natureEtabelissement,
 			String logoChemin, Date dateCreation, String categorie, String type, String secteurActivite, String siteWeb,
 			String email, String telFixe, String telPortable, String fax, String typeImplicationApa,
 			String anneeImplicationApa, String infoAdditionnelles, List<User> users,
-			List<Rg> rg) {
+			Collection<Rg> rg) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -208,6 +215,34 @@ public class Institution implements Serializable  {
 		this.users = users;
 		this.rg = rg;
 	}
+	
+	public Institution(long id, String nom, String raisonSociale, String statutJuridique, String natureEtabelissement,
+			String logoChemin, Date dateCreation, String categorie, String type, String secteurActivite, String siteWeb,
+			String email, String telFixe, String telPortable, String fax, String typeImplicationApa,
+			String anneeImplicationApa, String infoAdditionnelles,
+			Collection<Rg> rg) {
+		super();
+		this.id = id;
+		this.nom = nom;
+		this.raisonSociale = raisonSociale;
+		this.statutJuridique = statutJuridique;
+		this.natureEtabelissement = natureEtabelissement;
+		this.logoChemin = logoChemin;
+		this.dateCreation = dateCreation;
+		this.categorie = categorie;
+		this.type = type;
+		this.secteurActivite = secteurActivite;
+		this.siteWeb = siteWeb;
+		this.email = email;
+		this.telFixe = telFixe;
+		this.telPortable = telPortable;
+		this.fax = fax;
+		this.typeImplicationApa = typeImplicationApa;
+		this.anneeImplicationApa = anneeImplicationApa;
+		this.infoAdditionnelles = infoAdditionnelles;
+		this.rg = rg;
+	}
+	
 	public Institution() {
 		super();
 	}
