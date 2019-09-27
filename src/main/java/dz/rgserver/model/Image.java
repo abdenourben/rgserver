@@ -1,40 +1,83 @@
 package dz.rgserver.model;
 
 import java.io.Serializable;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="image")
-
 public class Image implements Serializable {
 
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
+	private static final long serialVersionUID = 1L;
+	@Id 
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private String titre;
 	private String description;
 	private String chemin;
 	private String type;
 	
+	
+	public Image(String titre, String description, String chemin, String type) {
+		super();
+		this.titre = titre;
+		this.description = description;
+		this.chemin = chemin;
+		this.type = type;
+	}
+
+	public Image() {
+		super();
+	}
+	
+	
 	//relation image-RG
 	@ManyToOne
 	@JsonIgnore
 	private Rg rg;
+	 // relation avec activité 
+	
+	@OneToOne
+	@JsonIgnore
+	private Activite activite;
+	
+	// institution
+	@OneToOne
+	@JsonIgnore
+	private Institution institution;
+	
+	public Institution getInstitution() {
+		return institution;
+	}
+
+	public void setInstitution(Institution institution) {
+		this.institution = institution;
+	}
 
 	//GETTERS AND SETTERS
 	
+	public Rg getRg() {
+		return rg;
+	}
+
+	public void setRg(Rg rg) {
+		this.rg = rg;
+	}
+
+	public Activite getActivite() {
+		return activite;
+	}
+
+	public void setActivite(Activite activite) {
+		this.activite = activite;
+	}
+
 	public long getId() {
 		return id;
 	}

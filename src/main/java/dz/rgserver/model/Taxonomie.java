@@ -1,27 +1,22 @@
 package dz.rgserver.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="taxonomie")
 public class Taxonomie implements Serializable {
 
-	@Id @GeneratedValue(strategy = GenerationType.AUTO)
+	private static final long serialVersionUID = 1L;
+	@Id 
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	private String espece;
 	private String genre;
@@ -30,12 +25,11 @@ public class Taxonomie implements Serializable {
 	private String classe;
 	
 	//relation Taxonomie-RG
-	@OneToMany(mappedBy = "taxonomie", orphanRemoval=true)
+	@OneToMany
 	@JsonIgnore
-	private Collection<Rg> rg;
+	private List<Rg> rg;
 	
 	//GETTERS AND SETTERS
-
 	public long getId() {
 		return id;
 	}
@@ -84,35 +78,33 @@ public class Taxonomie implements Serializable {
 		this.classe = classe;
 	}
 
-	public Collection<Rg> getRessource() {
+	public List<Rg> getRessource() {
 		return rg;
 	}
 
-	public void setRessource(Collection<Rg> rg) {
+	public void setRessource(List<Rg> rg) {
 		this.rg = rg;
 	}
-	
-	//CONSTRUCTORS
 
-	public Taxonomie(long id, String espece, String genre, String famille, String ordre, String classe,
-			Collection<Rg> rg) {
-		super();
-		this.id = id;
-		this.espece = espece;
-		this.genre = genre;
-		this.famille = famille;
-		this.ordre = ordre;
-		this.classe = classe;
+	public List<Rg> getRg() {
+		return rg;
+	}
+
+	public void setRg(List<Rg> rg) {
 		this.rg = rg;
 	}
 
 	public Taxonomie() {
 		super();
 	}
-	
-	
-	
-	
-	
 
+	public Taxonomie(String espece, String genre, String famille, String ordre, String classe) {
+		super();
+		this.espece = espece;
+		this.genre = genre;
+		this.famille = famille;
+		this.ordre = ordre;
+		this.classe = classe;
+	}
+	
 }
