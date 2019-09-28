@@ -9,20 +9,15 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name = "id")
 public class RgAlimentaire extends Rg {
 
-	private String aliment;
+	private String zone; 
+	private String exploitation;
 	
 	//GETTERS ANS SETTERS
 
-	public String getAliment() {
-		return aliment;
-	}
-
-	public void setAliment(String aliment) {
-		this.aliment = aliment;
-	} 
 	public boolean equal(RgAlimentaire rg1,RgAlimentaire rg2) {
 		if (
-				(rg1.getAliment().equals(rg2.getAliment()) &&
+				(rg1.getZone().equals(rg2.getZone()) &&
+				(rg1.getExploitation().equals(rg2.getExploitation()))&&
 				(rg1.getDescription().equals(rg2.getDescription()))&&
 				(rg1.getCycleVie().equals(rg2.getCycleVie()))&&
 				(rg1.getEnvironnement().equals(rg2.getEnvironnement()))&&
@@ -40,6 +35,22 @@ public class RgAlimentaire extends Rg {
 				  
 		return true;
 		else return false;
+	}
+
+	public String getZone() {
+		return zone;
+	}
+
+	public void setZone(String zone) {
+		this.zone = zone;
+	}
+
+	public String getExploitation() {
+		return exploitation;
+	}
+
+	public void setExploitation(String exploitation) {
+		this.exploitation = exploitation;
 	}
 	
 	

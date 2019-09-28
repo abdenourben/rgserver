@@ -9,20 +9,14 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name = "id")
 public class RgForet extends Rg {
 	
-	private String foret;
+	private String transmission;
 	
 	//GETTERS AND SETTERS
 
-	public String getForet() {
-		return foret;
-	}
 
-	public void setForet(String foret) {
-		this.foret = foret;
-	} 
 	public boolean equal(RgForet rg1,RgForet rg2) {
 		if (
-				(rg1.getForet().equals(rg2.getForet()) &&
+				(rg1.getTransmission().equals(rg2.getTransmission()) &&
 				(rg1.getDescription().equals(rg2.getDescription()))&&
 				(rg1.getCycleVie().equals(rg2.getCycleVie()))&&
 				(rg1.getEnvironnement().equals(rg2.getEnvironnement()))&&
@@ -40,6 +34,14 @@ public class RgForet extends Rg {
 				  
 		return true;
 		else return false;
+	}
+
+	public String getTransmission() {
+		return transmission;
+	}
+
+	public void setTransmission(String transmission) {
+		this.transmission = transmission;
 	}
 	
 	

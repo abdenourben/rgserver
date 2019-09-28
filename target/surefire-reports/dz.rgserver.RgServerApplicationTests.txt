@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: dz.rgserver.RgServerApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 28.418 s - in dz.rgserver.RgServerApplicationTests
