@@ -15,10 +15,16 @@ import dz.rgserver.model.Institution;
 import dz.rgserver.model.Region;
 import dz.rgserver.model.Rg;
 import dz.rgserver.model.RgAlimentaire;
+import dz.rgserver.model.RgAlimentaireTaxonomie;
 import dz.rgserver.model.RgAnimale;
+import dz.rgserver.model.RgAnimaleTaxonomie;
 import dz.rgserver.model.RgForet;
+import dz.rgserver.model.RgForetTaxonomie;
 import dz.rgserver.model.RgMarine;
 import dz.rgserver.model.RgMicro;
+import dz.rgserver.model.RgMicroTaxonomie;
+import dz.rgserver.model.RgTaxonomieObject;
+import dz.rgserver.model.Taxonomie;
 import dz.rgserver.model.Version;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,7 +108,7 @@ public class RgRestService {
   		return rgMarineRepository.findAll();
   	}
     
-    @RequestMapping(value = "/rg/marine", method = RequestMethod.POST)
+   /* @RequestMapping(value = "/rg/marine", method = RequestMethod.POST)
     public void saveRgMarine(@RequestBody RgMarine rg) {
     	rg.setNumVersion(0);
     	rg.setEtatValidation(false);
@@ -128,37 +134,41 @@ public class RgRestService {
  		versionRepository.save(v);
  		
  		
-    }
+    } */
     
-	@RequestMapping(value="/rg/marine/{id}", method = RequestMethod.DELETE)
-	public  boolean deleteRgMarine(@PathVariable long id ){
-		
-		RgMarine rg= rgMarineRepository.findById(id).get();
-       Version v=new Version();
-       
-    	v.setNomCommunFr(rg.getNomCommunFr());
-    	v.setNomCommunAr(rg.getNomCommunAr());
-    	v.setNomScientifique(rg.getNomScientifique());
+    
+    @PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping(value = "/rg/marine", method = RequestMethod.POST)
+    public RgTaxonomieObject saveRgMarine(@RequestBody RgTaxonomieObject rgTaxonomieObject) {	
     	
-    	v.setDescription(rg.getDescription());
-    	v.setMorphologie(rg.getMorphologie());
-    	v.setFormuleChimique(rg.getFormuleChimique());
-    	v.setStructure(rg.getStructure());
-    	v.setEnvironnement(rg.getEnvironnement());
-    	v.setTransmission(rg.getTransmission());
-    	v.setCycleVie(rg.getCycleVie());
-    	v.setMarine(rg.getMarine());
-		
-		
-		v.setType_action("Suppression");
-		v.setIdRessource(rg.getId());
-		v.setDate_version();
-		versionRepository.save(v);
-
-	
-		rgRepository.deleteById(id);
-		return true;
-	}
+    	RgMarine rg = new RgMarine();
+    	Taxonomie taxo = new Taxonomie(); 
+    	taxo = rgTaxonomieObject.getTaxonomie(); 
+    	rg = rgTaxonomieObject.getRg(); 
+    		
+    	rg.setNumVersion(0);
+    	rg.setEtatValidation(false);
+    	rg.setTaxonomie(taxo);
+    	rgMarineRepository.save(rg);  
+    	Version v=new Version();
+   	 
+     	v.setNomCommunFr(rg.getNomCommunFr());
+     	v.setNomCommunAr(rg.getNomCommunAr());
+     	v.setNomScientifique(rg.getNomScientifique());    	
+     	v.setDescription(rg.getDescription());
+     	v.setMorphologie(rg.getMorphologie());
+     	v.setFormuleChimique(rg.getFormuleChimique());
+     	v.setStructure(rg.getStructure());
+     	v.setEnvironnement(rg.getEnvironnement());
+     	v.setTransmission(rg.getTransmission());
+     	v.setCycleVie(rg.getCycleVie());
+     	v.setDate_version();
+ 		v.setType_action("création");
+ 		v.setIdRessource(rg.getId());
+ 		v.setNumVersion(0);
+ 		versionRepository.save(v);
+    	return rgTaxonomieObject;
+    }
     
    
  /* @RequestMapping(value="/rg/marine/{id}", method = RequestMethod.PUT)
@@ -190,11 +200,9 @@ public class RgRestService {
 	    	v.setDescription(rg.getDescription());
 	    	v.setMorphologie(rg.getMorphologie());
 	    	v.setFormuleChimique(rg.getFormuleChimique());
-	    	v.setStructure(rg.getStructure());
 	    	v.setEnvironnement(rg.getEnvironnement());
 	    	v.setTransmission(rg.getTransmission());
 	    	v.setCycleVie(rg.getCycleVie());
-	    	v.setMarine(rg.getMarine());
 			v.setDate_version();
 			v.setNumVersion(nbr2);
 			v.setType_action("Modification");
@@ -212,17 +220,26 @@ public class RgRestService {
   		return rgAlimentaireRepository.findAll(); 
     }
     
+   
+    
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/rg/alimentaire", method = RequestMethod.POST)
-    public void saveRgAlimentaire(@RequestBody RgAlimentaire rg) {
-    	rg.setNumVersion(0);
-    	 rg.setEtatValidation(false);
-    	 rgAlimentaireRepository.save(rg); 
-    	 Version v=new Version();
+    public RgAlimentaireTaxonomie saveRgAlimentaire(@RequestBody RgAlimentaireTaxonomie rgAlimentaireTaxonomie) {	
     	
+    	RgAlimentaire rg = new RgAlimentaire();
+    	Taxonomie taxo = new Taxonomie(); 
+    	taxo = rgAlimentaireTaxonomie.getTaxonomie(); 
+    	rg = rgAlimentaireTaxonomie.getRg(); 
+    		
+    	rg.setNumVersion(0);
+    	rg.setEtatValidation(false);
+    	rg.setTaxonomie(taxo);
+    	rgAlimentaireRepository.save(rg);  
+    	Version v=new Version();
+   	 
      	v.setNomCommunFr(rg.getNomCommunFr());
      	v.setNomCommunAr(rg.getNomCommunAr());
-     	v.setNomScientifique(rg.getNomScientifique());
-     	
+     	v.setNomScientifique(rg.getNomScientifique());    	
      	v.setDescription(rg.getDescription());
      	v.setMorphologie(rg.getMorphologie());
      	v.setFormuleChimique(rg.getFormuleChimique());
@@ -230,12 +247,14 @@ public class RgRestService {
      	v.setEnvironnement(rg.getEnvironnement());
      	v.setTransmission(rg.getTransmission());
      	v.setCycleVie(rg.getCycleVie());
-     	v.setAliment(rg.getAliment());
+     	v.setZone(rg.getZone());
+     	v.setExploitation(rg.getExploitation());
      	v.setDate_version();
  		v.setType_action("création");
  		v.setIdRessource(rg.getId());
  		v.setNumVersion(0);
  		versionRepository.save(v);
+    	return rgAlimentaireTaxonomie;
     }
     
 	@RequestMapping(value="/rg/alimentaire/{id}", method = RequestMethod.DELETE)
@@ -255,7 +274,8 @@ public class RgRestService {
     	v.setEnvironnement(rg.getEnvironnement());
     	v.setTransmission(rg.getTransmission());
     	v.setCycleVie(rg.getCycleVie());
-    	v.setAliment(rg.getAliment());
+    	v.setZone(rg.getZone());
+     	v.setExploitation(rg.getExploitation());
 		
 		
 		v.setType_action("Suppression");
@@ -295,7 +315,8 @@ public class RgRestService {
 	    	v.setEnvironnement(rg.getEnvironnement());
 	    	v.setTransmission(rg.getTransmission());
 	    	v.setCycleVie(rg.getCycleVie());
-	    	v.setAliment(rg.getAliment());
+	    	v.setZone(rg.getZone());
+	    	v.setExploitation(rg.getExploitation());
 			v.setDate_version();
 			v.setNumVersion(nbr2);
 			v.setType_action("Modification");
@@ -308,36 +329,48 @@ public class RgRestService {
 
     
     @PreAuthorize("hasRole('ADMIN')")
-  	@RequestMapping(value="/rg/animal", method = RequestMethod.GET)
+  	@RequestMapping(value="/rg/animale", method = RequestMethod.GET)
   	public List<RgAnimale> listRgAnimale(){
   		return rgAnimaleRepository.findAll(); 
     }
+     
     
-    @RequestMapping(value = "/rg/animal", method = RequestMethod.POST)
-    public void saveRgAnimale(@RequestBody RgAnimale rg) {
-    	rg.setNumVersion(0);
-    	 rg.setEtatValidation(false);
-    	rgAnimaleRepository.save(rg); 
-    	Version v=new Version();
     
-    	v.setNomCommunFr(rg.getNomCommunFr());
-    	v.setNomCommunAr(rg.getNomCommunAr());
-    	v.setNomScientifique(rg.getNomScientifique());
+    @PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping(value = "/rg/animale", method = RequestMethod.POST)
+    public RgAnimaleTaxonomie saveRgAnimale(@RequestBody RgAnimaleTaxonomie rgAnimaleTaxonomie) {	
     	
-    	v.setDescription(rg.getDescription());
-    	v.setMorphologie(rg.getMorphologie());
-    	v.setFormuleChimique(rg.getFormuleChimique());
-    	v.setStructure(rg.getStructure());
-    	v.setEnvironnement(rg.getEnvironnement());
-    	v.setTransmission(rg.getTransmission());
-    	v.setCycleVie(rg.getCycleVie());
-    	v.setAnimale(rg.getAnimale());
-    	v.setDate_version();
-		v.setType_action("création");
-		
-		v.setIdRessource(rg.getId());
-		v.setNumVersion(0);
-		versionRepository.save(v);
+    	RgAnimale rg = new RgAnimale();
+    	Taxonomie taxo = new Taxonomie(); 
+    	taxo = rgAnimaleTaxonomie.getTaxonomie(); 
+    	rg = rgAnimaleTaxonomie.getRg(); 
+    		
+    	rg.setNumVersion(0);
+    	rg.setEtatValidation(false);
+    	rg.setTaxonomie(taxo);
+    	rgAnimaleRepository.save(rg);  
+    	Version v=new Version();
+   	 
+     	v.setNomCommunFr(rg.getNomCommunFr());
+     	v.setNomCommunAr(rg.getNomCommunAr());
+     	v.setNomScientifique(rg.getNomScientifique());    	
+     	v.setDescription(rg.getDescription());
+     	v.setMorphologie(rg.getMorphologie());
+     	v.setFormuleChimique(rg.getFormuleChimique());
+     	v.setStructure(rg.getStructure());
+     	v.setEnvironnement(rg.getEnvironnement());
+     	v.setTransmission(rg.getTransmission());
+     	v.setCycleVie(rg.getCycleVie());
+     	v.setProduction(rg.getProduction());
+     	v.setSystemeProd(rg.getSystemeProd());
+     	v.setElevage(rg.getElevage());
+     	v.setConservation(rg.getConservation());
+     	v.setDate_version();
+ 		v.setType_action("création");
+ 		v.setIdRessource(rg.getId());
+ 		v.setNumVersion(0);
+ 		versionRepository.save(v);
+    	return rgAnimaleTaxonomie;
     }
     
     
@@ -346,7 +379,7 @@ public class RgRestService {
     	rg.setNumVersion(0);
     }
     */
-	@RequestMapping(value="/rg/animal/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value="/rg/animale/{id}", method = RequestMethod.DELETE)
 	public  boolean deleteRgAnimal(@PathVariable long id ){
 		
 		RgAnimale rg= rgAnimaleRepository.findById(id).get();
@@ -363,7 +396,10 @@ public class RgRestService {
     	v.setEnvironnement(rg.getEnvironnement());
     	v.setTransmission(rg.getTransmission());
     	v.setCycleVie(rg.getCycleVie());
-    	v.setAnimale(rg.getAnimale());
+    	v.setProduction(rg.getProduction());
+     	v.setSystemeProd(rg.getSystemeProd());
+     	v.setElevage(rg.getElevage());
+     	v.setConservation(rg.getConservation());
 		
 		
 		v.setType_action("Suppression");
@@ -376,7 +412,7 @@ public class RgRestService {
 		return true;
 	}
 	
-	@RequestMapping(value="/rg/animal/{id}", method = RequestMethod.PUT)
+	@RequestMapping(value="/rg/animale/{id}", method = RequestMethod.PUT)
 	public boolean updateRgAnimal(@PathVariable long id,@RequestBody RgAnimale rg ){
 		
 		
@@ -404,7 +440,10 @@ public class RgRestService {
 	    	v.setEnvironnement(rg.getEnvironnement());
 	    	v.setTransmission(rg.getTransmission());
 	    	v.setCycleVie(rg.getCycleVie());
-	    	v.setAnimale(rg.getAnimale());
+	    	v.setProduction(rg.getProduction());
+	     	v.setSystemeProd(rg.getSystemeProd());
+	     	v.setElevage(rg.getElevage());
+	     	v.setConservation(rg.getConservation());
 			v.setDate_version();
 			v.setNumVersion(nbr2);
 			v.setType_action("Modification");
@@ -420,19 +459,26 @@ public class RgRestService {
    		return rgMicroRepository.findAll(); 
     }
     
+    
+    
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/rg/micro", method = RequestMethod.POST)
-    public void saveRgMicro(@RequestBody RgMicro rg) {
+    public RgMicroTaxonomie saveRgMicro(@RequestBody RgMicroTaxonomie rgMicroTaxonomie) {	
+    	
+    	RgMicro rg = new RgMicro();
+    	Taxonomie taxo = new Taxonomie(); 
+    	taxo = rgMicroTaxonomie.getTaxonomie(); 
+    	rg = rgMicroTaxonomie.getRg(); 
+    		
     	rg.setNumVersion(0);
-    	 rg.setEtatValidation(false);
-    	
-    	 rgMicroRepository.save(rg);  
-    	
-    	 Version v=new Version();
-    	
+    	rg.setEtatValidation(false);
+    	rg.setTaxonomie(taxo);
+    	rgMicroRepository.save(rg);  
+    	Version v=new Version();
+   	 
      	v.setNomCommunFr(rg.getNomCommunFr());
      	v.setNomCommunAr(rg.getNomCommunAr());
-     	v.setNomScientifique(rg.getNomScientifique());
-     	
+     	v.setNomScientifique(rg.getNomScientifique());    	
      	v.setDescription(rg.getDescription());
      	v.setMorphologie(rg.getMorphologie());
      	v.setFormuleChimique(rg.getFormuleChimique());
@@ -440,12 +486,13 @@ public class RgRestService {
      	v.setEnvironnement(rg.getEnvironnement());
      	v.setTransmission(rg.getTransmission());
      	v.setCycleVie(rg.getCycleVie());
-     	v.setMicro(rg.getMicro());
+     	v.setSymptome(rg.getSymptome());
      	v.setDate_version();
  		v.setType_action("création");
  		v.setIdRessource(rg.getId());
  		v.setNumVersion(0);
  		versionRepository.save(v);
+    	return rgMicroTaxonomie;
     }
     
     @RequestMapping(value="/rg/micro/{id}", method = RequestMethod.DELETE)
@@ -465,7 +512,7 @@ public class RgRestService {
     	v.setEnvironnement(rg.getEnvironnement());
     	v.setTransmission(rg.getTransmission());
     	v.setCycleVie(rg.getCycleVie());
-    	v.setMicro(rg.getMicro());
+    	v.setSymptome(rg.getSymptome());
 		
 		
 		v.setType_action("Suppression");
@@ -506,7 +553,7 @@ public class RgRestService {
 	    	v.setEnvironnement(rg.getEnvironnement());
 	    	v.setTransmission(rg.getTransmission());
 	    	v.setCycleVie(rg.getCycleVie());
-	    	v.setMicro(rg.getMicro());
+	    	v.setSymptome(rg.getSymptome());
 			v.setDate_version();
 			v.setNumVersion(nbr2);
 			v.setType_action("Modification");
@@ -521,32 +568,41 @@ public class RgRestService {
    	public List<RgForet> listRgForet(){
    		return rgForetRepository.findAll(); 
     }
+
     
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/rg/foret", method = RequestMethod.POST)
-    public void saveRgForet(@RequestBody RgForet rg) {
+    public RgForetTaxonomie saveRgForet(@RequestBody RgForetTaxonomie rgForetTaxonomie) {	
+    	
+    	RgForet rg = new RgForet();
+    	Taxonomie taxo = new Taxonomie(); 
+    	taxo = rgForetTaxonomie.getTaxonomie(); 
+    	rg = rgForetTaxonomie.getRg(); 
+    		
     	rg.setNumVersion(0);
-    	 rg.setEtatValidation(false);
-    	 rgForetRepository.save(rg); 
-    	 Version v=new Version();
-    	 
+    	rg.setEtatValidation(false);
+    	rg.setTaxonomie(taxo);
+    	rgForetRepository.save(rg);  
+    	Version v=new Version();
+   	 
      	v.setNomCommunFr(rg.getNomCommunFr());
      	v.setNomCommunAr(rg.getNomCommunAr());
-     	v.setNomScientifique(rg.getNomScientifique());
-     	
+     	v.setNomScientifique(rg.getNomScientifique());    	
      	v.setDescription(rg.getDescription());
      	v.setMorphologie(rg.getMorphologie());
      	v.setFormuleChimique(rg.getFormuleChimique());
-     	v.setStructure(rg.getStructure());
      	v.setEnvironnement(rg.getEnvironnement());
      	v.setTransmission(rg.getTransmission());
      	v.setCycleVie(rg.getCycleVie());
-     	v.setForet(rg.getForet());
      	v.setDate_version();
  		v.setType_action("création");
  		v.setIdRessource(rg.getId());
  		v.setNumVersion(0);
  		versionRepository.save(v);
+    	return rgForetTaxonomie;
     }
+    
+    
     
     @RequestMapping(value="/rg/foret/{id}", method = RequestMethod.DELETE)
 	public  boolean deleteRgForet(@PathVariable long id ){
@@ -561,11 +617,9 @@ public class RgRestService {
     	v.setDescription(rg.getDescription());
     	v.setMorphologie(rg.getMorphologie());
     	v.setFormuleChimique(rg.getFormuleChimique());
-    	v.setStructure(rg.getStructure());
     	v.setEnvironnement(rg.getEnvironnement());
     	v.setTransmission(rg.getTransmission());
     	v.setCycleVie(rg.getCycleVie());
-    	v.setForet(rg.getForet());
 		
 		
 		v.setType_action("Suppression");
@@ -602,11 +656,9 @@ public class RgRestService {
 	    	v.setDescription(rg.getDescription());
 	    	v.setMorphologie(rg.getMorphologie());
 	    	v.setFormuleChimique(rg.getFormuleChimique());
-	    	v.setStructure(rg.getStructure());
 	    	v.setEnvironnement(rg.getEnvironnement());
 	    	v.setTransmission(rg.getTransmission());
 	    	v.setCycleVie(rg.getCycleVie());
-	    	v.setForet(rg.getForet());
 			v.setDate_version();
 			v.setNumVersion(nbr2);
 			v.setType_action("Modification");
@@ -620,10 +672,18 @@ public class RgRestService {
 		
 		Rg rg= rgRepository.findById(id).get();
 		rg.setEtatValidation(true);
-		rgRepository.save(rg);
-	
-		
+		rgRepository.save(rg);		
 	}
+	
+	   @RequestMapping(value = "/rg/find-institution/{id}", method = RequestMethod.GET)
+		public List<Rg> findInstitutions(@PathVariable long id) {
+			return rgRepository.findByInstitutionId(id);  
+		}
+	    
+	    @RequestMapping(value = "/rg/find-taxonomie/{id}", method = RequestMethod.GET)
+	   	public List<Rg> findTaxonomies(@PathVariable long id) {
+	   		return rgRepository.findByTaxonomieId(id); 
+	   	}
 
 	
 	

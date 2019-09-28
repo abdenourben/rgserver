@@ -9,22 +9,20 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name = "id")
 public class RgMicro extends Rg {
 	
-	private String micro;
+	private String structure;
+	private String transmission;
+	private String symptome; 
 	
 	//ADD ATTRIBUTS
 	
 	//GETTERS AND SETTERS
 
-	public String getMicro() {
-		return micro;
-	}
 
-	public void setMicro(String micro) {
-		this.micro = micro;
-	} 
 	public boolean equal(RgMicro rg1,RgMicro rg2) {
 		if (
-				(rg1.getMicro().equals(rg2.getMicro()) &&
+				(rg1.getStructure().equals(rg2.getStructure()) &&
+				(rg1.getTransmission().equals(rg2.getTransmission())) &&
+				(rg1.getSymptome().equals(rg2.getSymptome())) &&
 				(rg1.getDescription().equals(rg2.getDescription()))&&
 				(rg1.getCycleVie().equals(rg2.getCycleVie()))&&
 				(rg1.getEnvironnement().equals(rg2.getEnvironnement()))&&
@@ -42,6 +40,30 @@ public class RgMicro extends Rg {
 				  
 		return true;
 		else return false;
+	}
+
+	public String getStructure() {
+		return structure;
+	}
+
+	public void setStructure(String structure) {
+		this.structure = structure;
+	}
+
+	public String getTransmission() {
+		return transmission;
+	}
+
+	public void setTransmission(String transmission) {
+		this.transmission = transmission;
+	}
+
+	public String getSymptome() {
+		return symptome;
+	}
+
+	public void setSymptome(String symptome) {
+		this.symptome = symptome;
 	}
 	
 	

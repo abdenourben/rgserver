@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import dz.rgserver.model.UsageCom;
 
 
-public interface usageComRepository  extends JpaRepository<UsageCom, Long>{
+public interface UsageComRepository  extends JpaRepository<UsageCom, Long>{
 
 	@Query(" select UsageCom from UsageCom as UsageCom where UsageCom.secteur like :x")
 	public Page<UsageCom> chercherUtilisationCommerciales (@Param("x")String mc , Pageable pageable );

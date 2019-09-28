@@ -72,12 +72,12 @@ public abstract class Rg implements Serializable {
 	
 	
 	// relation entre RG-institution
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JsonIgnore
 	private Institution institution;
 	
 	//relation RG-taxonmie
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JsonIgnore
 	private Taxonomie taxonomie;
 

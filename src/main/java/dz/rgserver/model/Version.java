@@ -36,11 +36,15 @@ public class Version implements Serializable{
 	protected String cycleVie; 
 	
 	/**************************   caracteristique RG PAR TYPE  ***************************/
-	private String aliment;
-	private String animale;
-	private String marine;
-	private String foret;
-	private String micro;
+
+	private String zone; 
+	private String exploitation;
+	private String production;
+	private String elevage;
+	private String systemeProd;
+	private String conservation;
+	private String symptome; 
+	
 	/***************************  *********  **************************************/
 	private int numVersion;
 	
@@ -206,64 +210,7 @@ public class Version implements Serializable{
 
 
 
-	public String getAliment() {
-		return aliment;
-	}
-
-
-
-	public void setAliment(String aliment) {
-		this.aliment = aliment;
-	}
-
-
-
-	public String getAnimale() {
-		return animale;
-	}
-
-
-
-	public void setAnimale(String animale) {
-		this.animale = animale;
-	}
-
-
-
-	public String getMarine() {
-		return marine;
-	}
-
-
-
-	public void setMarine(String marine) {
-		this.marine = marine;
-	}
-
-
-
-	public String getForet() {
-		return foret;
-	}
-
-
-
-	public void setForet(String foret) {
-		this.foret = foret;
-	}
-
-
-
-	public String getMicro() {
-		return micro;
-	}
-
-
-
-	public void setMicro(String micro) {
-		this.micro = micro;
-	}
-
+	
 
 
 	public void setId_version(long id_version) {
@@ -291,6 +238,96 @@ public class Version implements Serializable{
 
 	public void setNumVersion(int numVersion) {
 		this.numVersion = numVersion;
+	}
+
+
+
+	public String getZone() {
+		return zone;
+	}
+
+
+
+	public void setZone(String zone) {
+		this.zone = zone;
+	}
+
+
+
+	public String getExploitation() {
+		return exploitation;
+	}
+
+
+
+	public void setExploitation(String exploitation) {
+		this.exploitation = exploitation;
+	}
+
+
+
+	public String getProduction() {
+		return production;
+	}
+
+
+
+	public void setProduction(String production) {
+		this.production = production;
+	}
+
+
+
+	public String getElevage() {
+		return elevage;
+	}
+
+
+
+	public void setElevage(String elevage) {
+		this.elevage = elevage;
+	}
+
+
+
+	public String getSystemeProd() {
+		return systemeProd;
+	}
+
+
+
+	public void setSystemeProd(String systemeProd) {
+		this.systemeProd = systemeProd;
+	}
+
+
+
+	public String getConservation() {
+		return conservation;
+	}
+
+
+
+	public void setConservation(String conservation) {
+		this.conservation = conservation;
+	}
+
+
+
+	public String getSymptome() {
+		return symptome;
+	}
+
+
+
+	public void setSymptome(String symptome) {
+		this.symptome = symptome;
+	}
+
+
+
+	public void setDate_version(LocalDateTime date_version) {
+		this.date_version = date_version;
 	}
 	
 	

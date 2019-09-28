@@ -11,16 +11,16 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name = "id")
 public class RgMarine extends Rg {
 
-	private String marine;
+	private String transmission;
 	
 	//GETTERS AND SETTERS
 
 	public String getMarine() {
-		return marine;
+		return transmission;
 	}
 
-	public void setMarine(String marine) {
-		this.marine = marine;
+	public void setMarine(String transmission) {
+		this.transmission = transmission;
 	}
 
 	public RgMarine() {
